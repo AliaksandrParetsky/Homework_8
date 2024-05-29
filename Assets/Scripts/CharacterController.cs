@@ -1,49 +1,41 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(SpriteRenderer))]
 public class CharacterController : MonoBehaviour
 {
-    [SerializeField] List<Paralax> paralax = new List<Paralax>();
     private SpriteRenderer spriteRenderer;
     private bool isFlip;
 
+    public SpriteRenderer SpriteRenderer
+    {
+        get
+        {
+            if(spriteRenderer == null)
+            {
+                spriteRenderer = GetComponent<SpriteRenderer>();
+                spriteRenderer.flipX = false;
+            }
+
+            return spriteRenderer;
+        }
+    }
+
     private void Start()
     {
-        if (GetComponent<SpriteRenderer>())
-        {
-            spriteRenderer = GetComponent<SpriteRenderer>();
-        }
-        
         isFlip = false;
     }
 
-    private void Update()
+    public void FlipX()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (isFlip)
         {
-            if (isFlip)
-            {
-                spriteRenderer.flipX = false;
-                isFlip = false;
-
-                ChangeParalaxDirection();
-            }
-            else
-            {
-                spriteRenderer.flipX = true;
-                isFlip = true;
-
-                ChangeParalaxDirection();
-            }
+            SpriteRenderer.flipX = false;
+            isFlip = false;
         }
-    }
-
-    private void ChangeParalaxDirection()
-    {
-        foreach (var item in paralax)
+        else
         {
-            item.ChangeDirection();
+            SpriteRenderer.flipX = true;
+            isFlip = true;
         }
     }
 }

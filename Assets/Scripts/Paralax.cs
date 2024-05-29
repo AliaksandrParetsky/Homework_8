@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.U2D;
 
 [RequireComponent(typeof(SpriteRenderer))]
 public class Paralax : MonoBehaviour
