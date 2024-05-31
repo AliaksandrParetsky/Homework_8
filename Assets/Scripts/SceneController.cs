@@ -3,17 +3,16 @@ using UnityEngine;
 
 public class SceneController : MonoBehaviour
 {
-    [SerializeField] private CharacterController characterController;
-
     [SerializeField] List<Paralax> paralax = new List<Paralax>();
 
-    private void Update()
+    private void OnEnable()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            characterController.FlipX();
-            ChangeParalaxDirection();
-        }
+        CharacterController.onTouched += ChangeParalaxDirection;
+    }
+
+    private void OnDisable()
+    {
+        CharacterController.onTouched -= ChangeParalaxDirection;
     }
 
     private void ChangeParalaxDirection()

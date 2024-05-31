@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 [RequireComponent(typeof(SpriteRenderer))]
@@ -5,6 +6,13 @@ public class CharacterController : MonoBehaviour
 {
     private SpriteRenderer spriteRenderer;
     private bool isFlip;
+    public bool IsFlip 
+    {
+        get { return isFlip; }
+        set { isFlip = value; }
+    }
+
+    public static Action onTouched;
 
     public SpriteRenderer SpriteRenderer
     {
@@ -22,20 +30,30 @@ public class CharacterController : MonoBehaviour
 
     private void Start()
     {
-        isFlip = false;
+        IsFlip = false;
+    }
+
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.Space))
+        {
+            FlipX();
+
+            onTouched?.Invoke();
+        }
     }
 
     public void FlipX()
     {
-        if (isFlip)
+        if (IsFlip)
         {
             SpriteRenderer.flipX = false;
-            isFlip = false;
+            IsFlip = false;
         }
         else
         {
             SpriteRenderer.flipX = true;
-            isFlip = true;
+            IsFlip = true;
         }
     }
 }
